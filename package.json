@@ -1,6 +1,6 @@
 {
   "name": "microfronts",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Micro-Frontends solution using shell application and friendly frames",
   "main": "index.js",
   "scripts": {
