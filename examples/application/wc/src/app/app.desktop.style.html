@@ -1,0 +1,125 @@
+<style>
+
+@media screen and (min-width: 960px) {
+  :host {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    box-sizing: border-box;
+    background: transparent;
+    z-index: 0;
+    width: 100%;
+  }
+
+  :host div {
+    background-color: white;
+    display: inline-flex;
+    flex-direction: column;
+    align-self: stretch;
+    color: black;
+  }
+  
+  :host #wrapper {
+    padding: 0 5rem 0 5rem;
+    text-align: center;
+    background: transparent;
+    display: inline-block;
+  }
+
+  :host #wrapper, :host .text {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  :host .text {
+    padding: 3rem 5rem 1rem 5rem;
+  }
+
+  :host p, ul {
+    font-size: 0.6rem;
+    line-height: 1.5rem;
+  }
+
+  :host i#github-logo {
+    background: url(../assets/github-logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  :host i#student {
+    background: url(../assets/student.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 1.7rem;
+    width: 1.7rem;
+    top: 0.3rem;
+    position: relative;
+  }
+
+  :host button {
+    background-color: #f15924;
+    border: none;
+    border-radius: 5rem;
+    padding: 0.2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6rem;
+    width: 9rem;
+    justify-content: space-evenly;
+    color: white;
+  }
+
+  :host button:focus, :host button:active {
+    outline: none;
+  }
+
+  :host button > i {
+    width: 1.3rem;
+    height: 1.3rem;
+    display: inline-block;
+  }
+
+  :host button:not(:last-child) {
+    margin-right: 1rem;
+  }
+
+  :host #button-github {
+    background-color: lightgrey;
+    color: #666666;
+  }
+
+  :host #features {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  :host .feature {
+    margin-top: 2rem;
+    width: 8rem;
+    height: 8rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  :host .feature > p {
+    margin: 0;
+    font-size: 0.6rem;
+    line-height: 1rem;
+  }
+
+  :host .feature > h3 {
+    font-size: 0.6rem;
+    font-weight: bold;
+  }
+
+  :host h3 {
+    text-align: center;
+    color: #f15924;
+  }
+}
+
+</style>

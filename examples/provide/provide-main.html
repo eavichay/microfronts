@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Require-Provide example</title>
+  <script src="../../dist/index.js"></script>
+</head>
+<body>
+  <iframe height="600px" src="./provide-child.html"></iframe>
+  <iframe height="600px" src="./provide-child2.html"></iframe>
+  <script>
+    [...document.querySelectorAll('iframe')].forEach(iframe => {
+      iframe.contentWindow.Microfronts = Microfronts;
+    });
+
+    const dispatcher = document.createElement('div');
+    dispatcher.value = 0;
+    Microfronts.AppContext.provide('demo.shared', dispatcher);
+  </script>
+</body>
+</html>

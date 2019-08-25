@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Child1</title>
+</head>
+<body>
+      <h1>Child 1</h1>
+      <p id="content">Waiting for content</p>
+      <p>Shared <span id="shared">0</span></p>
+      <button onclick="doProvide()">Resolve</button>
+      <button onclick="doShare()">Tick-Tock</button>
+      <hr />
+      <h4>Message example</h4>
+      <input id="inp" /><button onclick="sendMessage()">SEND</button>
+      <script>
+        function doShare () {
+          const shared = Microfronts.AppContext.require('demo.shared').then(shared => {
+            shared.value++;
+            shared.dispatchEvent(new Event('tick'));
+          });
+        }
+        const shared = Microfronts.AppContext.require('demo.shared').then(shared => {
+          shared.addEventListener('tick', (e) => {
+            document.querySelector('#shared').innerText = shared.value;
+          });
+        });
+        function doProvide () {
+          Microfronts.AppContext.provide('demo.service1', () => 'Hello from child 1');
+        }
+        Microfronts.AppContext.require('demo.service2').then(service => {
+          const text = service();
+          document.querySelector('#content').innerText = text;
+        })
+
+        window.channel = Microfronts.channel('text');
+        function sendMessage () {
+          const text = document.querySelector('#inp').value;
+          window.channel.emit('text', text);
+        }
+        window.channel.on('text', text => document.querySelector('#inp').value = text);
+      </script>
+</body>
+</html>

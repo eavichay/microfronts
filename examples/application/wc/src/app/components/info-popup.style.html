@@ -1,0 +1,103 @@
+<style>
+  :host {
+    font-size: 0.6rem;
+  }
+
+  #comparison * {
+    font-size: 0.5rem;
+  }
+
+  #comparison thead {
+    padding-top: 0.3px;
+    padding-bottom: 0.3px;
+    text-align: left;
+    background-color: #f15924;
+    color: white;
+  }
+
+  #comparison tr:nth-child(even) {
+    background-color: #ffe0d5;
+  }
+
+  #comparison {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #comparison ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  #comparison, #comparison th, #comparison td {
+    border: 1px solid lightgray;
+    padding: 0.2rem;
+  }
+
+  #comparison .data-binding-info {
+    text-align: center;
+  }
+
+  #comparison .rating {
+    font-size: 0.7rem;
+    letter-spacing: -3px;
+  }
+
+  p {
+    line-height: 1.1rem;
+  }
+
+@media (max-width: 760px) {
+
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr { 
+    display: block; 
+    border: none !important;
+  }
+  
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead { 
+    display: none;
+  }
+
+  table ul {
+    display: inline-block;
+  }
+  
+  td { 
+    /* Behave  like a "row" */
+    display: inline-flex;
+    width: 100%;
+    border: none;
+    position: relative;
+    padding-left: 50%; 
+    text-align: left !important;
+    border-bottom: 1px dotted lightgrey !important;
+  }
+  
+  td:before { 
+    font-size: 0.5rem !important;
+    white-space: nowrap;
+    max-width: 6.5rem;
+    display: inline-block;
+    letter-spacing: -0.5px;
+    padding-right: 0.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    font-style: oblique;
+  }
+  
+  /*
+  Label the data
+  */
+  td:nth-of-type(1) {
+    border-top: 6px solid lightgray !important;
+  }
+  td:nth-of-type(1):before { content: "Library"; }
+  td:nth-of-type(2):before { content: "Performance"; }
+  td:nth-of-type(3):before { content: "Data Binding"; }
+  td:nth-of-type(4):before { content: "Code Style"; }
+  td:nth-of-type(5):before { content: "Tools"; }
+  td:nth-of-type(6):before { content: "Size (GZipped)"; }
+}
+</style>

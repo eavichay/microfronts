@@ -1,0 +1,40 @@
+{
+  "name": "microfronts",
+  "version": "0.0.4",
+  "description": "Micro-Frontends solution using shell application and friendly frames",
+  "main": "index.js",
+  "scripts": {
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha -r ts-node/register test/**/*.test.ts",
+    "copy-declarations": "mv .Microfronts/*.d.ts dist",
+    "clean-dist": "rm -rf dist/*",
+    "clean-temp": "rm -rf .Microfronts/*",
+    "compile": "tsc",
+    "bundle": "mkdir -p dist && rollup .Microfronts/index.js --file=\"./dist/index.js\" --sourcemap=\"./dist/index.js.map\" --output.format=\"iife\" --output.name=\"Microfronts\" >> dist/index.js",
+    "minify": "uglifyjs dist/index.js --source-map \"url='index.min.js.map',content='dist/index.js.map'\" -o dist/index.min.js",
+    "build": "npm run clean-temp && npm run clean-dist && npm run compile && npm run bundle && npm run minify && npm run copy-declarations"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,html,scss"
+    }
+  },
+  "keywords": [
+    "micro-frontends",
+    "javascript",
+    "front-end",
+    "microfrontends"
+  ],
+  "author": "Avichay Eyal <eavichay@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.6.9",
+    "mocha": "^6.2.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3",
+    "uglify-es": "^3.3.9"
+  }
+}

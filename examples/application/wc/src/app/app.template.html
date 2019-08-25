@@ -1,0 +1,55 @@
+<style>
+  :host button {
+    cursor: pointer;
+  }
+  pre {
+    margin-top: 2rem;
+    text-align: center;
+  }
+</style>
+
+<popup-modal s:id="modal">
+  <info-popup></info-popup>
+  <button slot="actions" click="closeModal">Awesome!</button>
+</popup-modal>
+
+<background-video src="../../../assets/bgvideo.mp4"></background-video>
+<div id="wrapper">
+  <app-header></app-header>
+</div>
+<div class="text">
+  <button-array>
+    <button click="openModal">
+      Why slim.js
+    </button>
+    <button click="redirect" target="http://slimjs.com">
+      <i id="student"></i>Documentation
+    </button>
+    <button click="redirect" target="https://github.com/slimjs/slim.js" id="button-github">
+      <i id="github-logo"></i>Project on github
+    </button>
+  </button-array>
+  <div>
+    <div id="features">
+      <div class="feature">
+        <h3>High performance</h3>
+        <p>Slim.js wins popular frameworks in performance metrics, startup time and rendering speed.</p>
+      </div>
+      <div class="feature">
+        <h3>Easy to use</h3>
+        <p>Create first-class web components so easy you might fall in love with it. Slim.js works seamlessly and plays nice with any frameworks.</p>
+      </div>
+      <div class="feature">
+        <h3>Lightweight</h3>
+        <p>Less than 5Kb, and you have the powers of a framework. One file and your'e good to go.</p>
+      </div>
+    </div>
+    <pre><code>$ npm install slim-js</code></pre>
+    <h3>With slim.js you can</h3>
+    <ul>
+      <li>Create components that seamlessly interop with any framework or tool</li>
+      <li>Use the native browser API without "black magic"</li>
+      <li>Create awesome applications and fully reusable components - even accross frameworks! Choose your own way to work with.</li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<style>
+  @media (max-width: 760px) {
+    ::slotted(button), ::slotted(input[type="button"]) {
+    flex-basis: 100% !important;
+    }
+  }
+
+  :host {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+    opacity: 0;
+    transition: 0.3s ease-in all;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.92);
+    max-width: 840px;
+    width: 80%;
+    padding: 1rem;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: 0.3s ease-out all;
+    box-shadow: 0px 2px 10px 3px rgba(0, 0, 0, 0.25);
+    position: relative;
+    top: 2rem;
+  }
+
+  #content-wrapper {
+    max-height: 70vh;
+    overflow: auto;
+    margin-bottom: 1rem;
+  }
+
+  #actions-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  ::slotted(button), ::slotted(input[type="button"]) {
+    flex-basis: 25%;
+  }
+
+  ::slotted(button:not(:last-child)), ::slotted(input[type="button"]:not(:last-child)) {
+    margin-right: 0.5rem;
+  }
+
+</style>
+
+<div s:id="backdrop" id="backdrop">
+</div>
+<div class="content">
+  <div id="content-wrapper"><slot></slot></div>
+  <div id="actions-wrapper">
+    <slot name="actions"></slot>
+  </div>
+</div>
