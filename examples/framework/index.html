@@ -22,25 +22,31 @@
     <button onclick="usePushState(event)" data-path="/welcome">Both</button>
     <button onclick="usePushState(event)" data-path="/unknown">None</button>
   </div> 
-  <iframe is="micro-front" load-from="./app1" app-id="app-1"></iframe>
-  <iframe is="micro-front" load-from="./app2" app-id="app-2"></iframe>
+  <iframe is="micro-front" app-id="app-1"></iframe>
+  <iframe is="micro-front" app-id="app-2"></iframe>
   <script>
     const config = {
-      '/welcome': {
-        active: ['app-1', 'app-2'],
-        disabled: []
+      routes: {
+        '/welcome': {
+          active: ['app-1', 'app-2'],
+          disabled: []
+        },
+        '/only-1': {
+          active: ['app-1'],
+          disabled: ['app-2']
+        },
+        '/only-2': {
+          active: ['app-2'],
+          disabled: ['app-1']
+        },
+        '*': {
+          disabled: ['app-1', 'app-2'],
+          active: []
+        }
       },
-      '/only-1': {
-        active: ['app-1'],
-        disabled: ['app-2']
-      },
-      '/only-2': {
-        active: ['app-2'],
-        disabled: ['app-1']
-      },
-      '*': {
-        disabled: ['app-1', 'app-2'],
-        active: []
+      apps: {
+        'app-1': './app1',
+        'app-2': './app2'
       }
     };
     Microfronts.init(config);

@@ -34,8 +34,13 @@ const defaultOptions: MicroFrontsOptions = {
   customElementTag: 'micro-front'
 };
 
+let registeredApps: any = {};
+
 export const init = (
-  config: { [path: string]: RouteConfig },
+  config: {
+    routes: { [path: string]: RouteConfig };
+    apps: { [appId: string]: string };
+  },
   options: MicroFrontsOptions = defaultOptions
 ): MicroFrontsHandlerInit => {
   if (router) {
@@ -43,9 +48,9 @@ export const init = (
   }
   const emitter = channel<RouteResolution>('router');
   router = new Router(undefined, emitter);
-  router.config(config);
+  router.config(config.routes);
   const resolution: RouteResolution = router.resolve(window.location.href) as RouteResolution;
-
+  registeredApps = config.apps;
   wrapHistoryAPI(router, emitter);
 
   AppContext.set<MicroFrontsHandlerInit>('initial.route.config', {
@@ -92,7 +97,7 @@ export default class MicroFront extends HTMLIFrameElement {
   }
 
   static get observedAttributes() {
-    return ['app-id', 'load-from'];
+    return ['app-id'];
   }
 
   private async loadCustom(url: string): Promise<void> {
@@ -121,9 +126,11 @@ export default class MicroFront extends HTMLIFrameElement {
     }
     if (attr === 'app-id') {
       this.appId = this.getAttribute('app-id') || '';
-      this.onRouteChanged(this.router.resolve(window.location.href));
-    } else if (attr === 'load-from') {
-      this.loadCustom(newVal);
+      const url = registeredApps[this.appId];
+      if (url) {
+        this.onRouteChanged(this.router.resolve(window.location.href));
+        this.loadCustom(url);
+      }
     }
   }
 

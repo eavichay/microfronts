@@ -1,18 +1,16 @@
 type EventsMap<T = any> = {
-  [key: string]: Array<(payload: T) => any>
-}
+  [key: string]: Array<(payload: T) => any>;
+};
 
 const messageBus: {
-  [key: string]: EventEmitter
+  [key: string]: EventEmitter;
 } = {};
-
 
 export interface IEventEmitter<T = any> {
   off: (eventName: string, callback: Function) => void;
   on: (eventName: string, callback: (data: T) => any) => Function;
   emit: (eventName: string, data: T) => void;
 }
-
 
 export class EventEmitter<T = any> implements IEventEmitter {
   private events: EventsMap<T> = {};
@@ -42,4 +40,4 @@ export class EventEmitter<T = any> implements IEventEmitter {
 export const channel = <T = any>(channel: string): EventEmitter<T> => {
   messageBus[channel] = messageBus[channel] || new EventEmitter<T>();
   return messageBus[channel];
-}
+};

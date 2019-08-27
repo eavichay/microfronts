@@ -7,18 +7,24 @@ const APPS = {
 };
 
 init({
-  '/': {
-    active: [APPS.slimjs],
-    disabled: [APPS.react, APPS.angular]
+  apps: {
+    [APPS.react]: 'http://localhost:3000',
+    [APPS.angular]: 'http://localhost:4200',
+    [APPS.slimjs]: 'http://localhost:9000'
   },
-  '/react': {
-    active: [APPS.react],
-    disabled: [APPS.slimjs, APPS.angular]
-  },
-  '/angular': {
-    active: [APPS.angular],
-    disabled: [APPS.react, APPS.slimjs]
+  routes: {
+    '*': {
+      active: [APPS.slimjs, APPS.react, APPS.angular]
+    },
+    '/react': {
+      active: [APPS.react],
+      disabled: [APPS.slimjs, APPS.angular]
+    },
+    '/angular': {
+      active: [APPS.angular],
+      disabled: [APPS.react, APPS.slimjs]
+    }
   }
 });
 
-window.history.pushState(null, null, '#/dashboard');
+// window.history.pushState(null, null, '#/dashboard');
