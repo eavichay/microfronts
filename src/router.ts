@@ -5,7 +5,9 @@ type KeyValue<T = any> = { [key: string]: T };
 
 type Context = {
   addEventListener: typeof Element.prototype.addEventListener,
-  removeEventListener: typeof Element.prototype.removeEventListener
+  removeEventListener: typeof Element.prototype.removeEventListener,
+  location: Location,
+  history: History
 }
 
 const getRouteBase = (url: string): string => {
@@ -97,6 +99,14 @@ export class Router {
       active.forEach(appName => this.registerActiveApp(path, appName));
       disabled.forEach(appName => this.registerInactiveApp(path, appName));
     });
+  }
+
+  public applyState(data: any = null, title: string = '', url = '/') {
+    (this.context as Context).history.pushState(data, title, url);
+  }
+
+  public applyHash(hash: string): void {
+    (this.context as Context).location.hash = hash;
   }
 
   public resolve(url?: string): RouteResolution|undefined {

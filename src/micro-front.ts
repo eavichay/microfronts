@@ -92,6 +92,7 @@ export default class MicroFront extends HTMLIFrameElement {
     const initConfiguration = AppContext.get<MicroFrontsHandlerInit>('initial.route.config');
     this.onRouteChanged = this.onRouteChanged.bind(this);
     this.onStateChanged = this.onStateChanged.bind(this);
+    this.onHashChanged = this.onHashChanged.bind(this);
     this.emitter = initConfiguration.emitter;
     this.router = initConfiguration.router;
   }
@@ -117,6 +118,7 @@ export default class MicroFront extends HTMLIFrameElement {
     Object.defineProperty(contentWindow, 'AppContext', { value: AppContext });
     contentDocument.write(doc.documentElement.innerHTML);
     contentDocument.close();
+    contentWindow.addEventListener('hashchange', this.onHashChanged);
     this.onRouteChanged(this.router.resolve(window.location.href));
   }
 
@@ -132,6 +134,10 @@ export default class MicroFront extends HTMLIFrameElement {
         this.loadCustom(url);
       }
     }
+  }
+
+  private onHashChanged(event: HashChangeEvent) {
+    this.router.applyHash((<Window>this.contentWindow).location.hash);
   }
 
   private onStateChanged(
@@ -165,7 +171,8 @@ export default class MicroFront extends HTMLIFrameElement {
   }
 
   connectedCallback() {
-    (this.contentWindow as any).AppContext = AppContext;
+    const contentWindow = this.contentWindow as Window&any;
+    contentWindow.AppContext = AppContext;
     const appId = this.getAttribute('app-id');
     if (!appId) {
       return;
@@ -176,6 +183,8 @@ export default class MicroFront extends HTMLIFrameElement {
   }
 
   disconnectedCallback() {
+    const contentWindow = this.contentWindow as Window & any;
+    contentWindow.removeEventListener('hashchange', this.onHashChanged);
     this.emitter.off(MFEvents.ROUTE_CHANGED, this.onRouteChanged);
     (this.emitter as EventEmitter<any>).off(MFEvents.NAVIGATION_CHANGE, this.onStateChanged);
   }
