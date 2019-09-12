@@ -1,9 +1,10 @@
 {
   "name": "microfronts",
   "version": "0.1.0",
-  "description": "Micro-Frontends solution using shell application and friendly frames",
-  "main": "./dist/index.min.js",
-  "module": "./dist/index.esm.min.js",
+  "description": "Micro-Frontends solution with shell application and front-ends orchestrator",
+  "main": "./dist/index.nomodule.min.js",
+  "module": "./dist/index.min.js",
+  "browser": "./dist/index.min.js",
   "scripts": {
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha -r ts-node/register test/**/*.test.ts",
     "copy-declarations": "mv .Microfronts/*.d.ts dist",
@@ -28,16 +29,27 @@
     "micro-frontends",
     "javascript",
     "front-end",
-    "microfrontends"
+    "microfrontends",
+    "micro-front-ends",
+    "micro frontends"
   ],
   "author": "Avichay Eyal <eavichay@gmail.com>",
+  "homepage": "https://github.com/eavichay/microfronts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eavichay/microfronts"
+  },
+  "bugs": {
+    "url": "https://github.com/eavichay/microfronts/issues"
+  },
+
   "license": "MIT",
   "devDependencies": {
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^12.6.9",
-    "mocha": "^6.2.0",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.5.3",
-    "uglify-es": "^3.3.9"
+    "@types/mocha": "5.2.7",
+    "@types/node": "12.6.9",
+    "mocha": "6.2.0",
+    "ts-node": "8.3.0",
+    "typescript": "3.5.3",
+    "uglify-es": "3.3.9"
   }
 }
