@@ -1,6 +1,6 @@
 {
   "name": "microfronts",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Micro-Frontends solution using shell application and friendly frames",
   "main": "./dist/index.min.js",
   "module": "./dist/index.esm.min.js",
