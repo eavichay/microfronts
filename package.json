@@ -1,6 +1,6 @@
 {
   "name": "microfronts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Micro-Frontends solution with shell application and front-ends orchestrator",
   "main": "./dist/index.nomodule.min.js",
   "module": "./dist/index.min.js",
@@ -42,7 +42,6 @@
   "bugs": {
     "url": "https://github.com/eavichay/microfronts/issues"
   },
-
   "license": "MIT",
   "devDependencies": {
     "@types/mocha": "5.2.7",
