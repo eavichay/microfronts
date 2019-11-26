@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#f15924">
+  <title>Slim.js starter app</title>
+  <style>
+    html {
+      height: 100vh;
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    iframe[is="app-container"] {
+      flex-grow: 1;
+      border: none;
+    }
+
+    #navbar {
+      width: 100%;
+      height: 80px;
+      background: black;
+      color: white;
+    }
+
+    #app {
+      display: flex;
+      height: 100%;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="navbar">
+    <a href="#/angular">ANGULAR</a>
+    <a href="#/angular-2">ANGULAR 2</a>
+    <a href="#/react">REACT</a>
+    <a href="#/both">BOTH</a>
+    <a href="#/unknown">UNKNOWN (fallback)</a>
+  </div>
+  <div id="app">
+    <iframe is="app-container" app-id="react"></iframe>
+    <iframe is="app-container" app-id="angular"></iframe>
+    <iframe is="app-container" app-id="error404"></iframe>
+  </div>
+</body>
+</html>

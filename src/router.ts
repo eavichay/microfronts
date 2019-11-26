@@ -1,126 +1,106 @@
-import { IEventEmitter } from './messaging';
-import { MFEvents } from './events.enum';
+import { IRouter, RouteInfo, KeyValue, RouteConfig, RouteGuard } from "./interfaces";
+import { Dispatcher } from './Messaging.js';
 
-type KeyValue<T = any> = { [key: string]: T };
-
-type Context = {
-  addEventListener: typeof Element.prototype.addEventListener,
-  removeEventListener: typeof Element.prototype.removeEventListener,
-  location: Location,
-  history: History
+const getBasePath = (path: string) => {
+    const match = /[^\/|^#|^?|^\&]+/.exec(path);
+    if (match) {
+        return match.toString().toLowerCase();
+    }
+    return '';
 }
 
-const getRouteBase = (url: string): string => {
-  try {
-    return url
-      .split('/')
-      .filter(part => !!part)[0];
-  } catch (err) {
-    return '';
-  }
-};
-
-const getHashBase = (url: string): string => {
-  const idx = url.indexOf('#');
-  if (idx < 0) {
-    const urlObject = new URL(url);
-    return getRouteBase(urlObject.pathname);
-  }
-  try {
-    return getRouteBase(url.split('#')[1]);
-  } catch (err) {
-    return '';
-  }
-};
-  
-export type RouteConfig = {
-  active?: Array<string>;
-  disabled?: Array<string>;
-};
-
-export type RouteResolution = {
-  url: string;
-  base: string;
-  activeApps: Array<string>;
-  disabledApps: Array<string>;
-};
-
-
-export class Router {
-
-  private channel: IEventEmitter | undefined;
-  private context: Context|undefined;
-  private activeApps: KeyValue<Array<string>> = {};
-  private disabledApps: KeyValue<Array<string>> = {};
-  private lastResolution: RouteResolution|undefined;
-
-  private hashChangeHandler(event: HashChangeEvent): void {
-    this.lastResolution = this.resolve(event.newURL);
-    if (this.channel) {
-      this.channel.emit(MFEvents.ROUTE_CHANGED, this.lastResolution);
-    }
-  }
-
-  constructor(context: Context = window, channel?: IEventEmitter<RouteResolution>) {
-
-    this.hashChangeHandler = this.hashChangeHandler.bind(this);
-    this.channel = channel;
-    this.context = context;
-
-    this.context.addEventListener('hashchange', this.hashChangeHandler as EventListener);
-  }
-
-  destroy() {
-    if (this.context) {
-      this.context
-        .removeEventListener('hashchange', this.hashChangeHandler as EventListener);
-    }
-    this.activeApps = {};
-    this.disabledApps = {};
-    this.context = undefined;
-  }
-
-  private registerActiveApp(path: string, app: string): void {
-    const base = getRouteBase(path);
-    this.activeApps[base].push(app);
-  }
-
-  private registerInactiveApp(path: string, app: string): void {
-    const base = getRouteBase(path);
-    this.disabledApps[base].push(app);
-  }
-
-  public config(cfg: KeyValue<RouteConfig>): void {
-    Object.entries(cfg).forEach(([path, routeConfig]) => {
-      const { active = [], disabled = [] } = routeConfig;
-      const base = getRouteBase(path);
-      this.disabledApps[base] = this.disabledApps[base] || [];
-      this.activeApps[base] = this.activeApps[base] || [];
-      active.forEach(appName => this.registerActiveApp(path, appName));
-      disabled.forEach(appName => this.registerInactiveApp(path, appName));
-    });
-  }
-
-  public applyState(data: any = null, title: string = '', url = '/') {
-    (this.context as Context).history.pushState(data, title, url);
-  }
-
-  public applyHash(hash: string): void {
-    (this.context as Context).location.hash = hash;
-  }
-
-  public resolve(url?: string): RouteResolution|undefined {
-    if (!url) {
-      return this.lastResolution;
-    }
-    const base = getHashBase(url);
-    const activeApps = this.activeApps[base] || this.activeApps['*'] || [];
-    const disabledApps = this.disabledApps[base] || this.disabledApps['*'] || [];
+const getRouteInfo = (path: string): Partial<RouteInfo> => {
     return {
-      url,
-      base,
-      activeApps,
-      disabledApps
+        base: getBasePath(path),
+        full: path
+    }
+}
+
+const nullRouteConfig: RouteConfig = {
+   active: [],
+   inactive: []
+}
+
+Object.seal(nullRouteConfig);
+
+export class Router extends Dispatcher implements IRouter {
+
+    private _markDOMElement: HTMLElement | null = null;
+    private _watchRootEnabled = false;
+    private _routes: KeyValue<RouteConfig> = {};
+    private _guards = new Set<RouteGuard>();
+    private _currentRoute: RouteInfo = {
+        base: '*',
+        full: window.location.hash,
+        config: nullRouteConfig
     };
-  }
+
+    public get currentRoute() {
+        return this._currentRoute;
+    }
+
+    public init(): void {
+        this.navigate(window.location.hash);
+    }
+    public markDOM(target?: string | HTMLElement): void {
+        if (typeof target === 'string') {
+            this._markDOMElement = document.querySelector(target);
+        } else if (!!target) {
+            this._markDOMElement = target;
+        } else {
+            this._markDOMElement = document.body;
+        }
+    }
+
+    private handleRootRouteChanged() {
+        this.navigate(window.location.hash);
+    }
+
+    public watchRoot(): void {
+        if (!this._watchRootEnabled) {
+            window.addEventListener('popstate', () => {
+                this.handleRootRouteChanged();
+            });
+            this._watchRootEnabled = true;
+        }
+    }
+
+    public registerRoute(base: string, routeConfig: RouteConfig): void {
+        this._routes[base] = routeConfig;
+    }
+
+    public addGuard(guard: RouteGuard): void {
+        this._guards.add(guard);
+    }
+
+    public removeGuard(guard: RouteGuard): void {
+        this._guards.delete(guard);
+    }
+
+    public async navigate(path: string): Promise<boolean> {
+        const targetRoute = getRouteInfo(path);
+        const base = targetRoute.base || '';
+        targetRoute.config = this._routes[base] || this._routes['*'] || nullRouteConfig;
+        const guards = Array.from(this._guards.values());
+        try {
+            for (let guard of guards) {
+                const resolution = await guard.check({
+                    from: this._currentRoute,
+                    to: targetRoute as RouteInfo
+                });
+                if (resolution === false) {
+                    return false;
+                }
+            }
+        } catch (err) {
+            return false;
+        }
+        if (this._markDOMElement) {
+            this._markDOMElement.setAttribute('route', targetRoute.base || '');
+        }
+        this._currentRoute = targetRoute as RouteInfo;
+        window.location.hash = path;
+        this.notify(targetRoute);
+        return true;
+    }
 }
