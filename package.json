@@ -2,9 +2,9 @@
   "name": "microfronts",
   "version": "1.0.0",
   "description": "Micro-Frontends solution with shell application and front-ends orchestrator",
-  "main": "./dist/index.nomodule.min.js",
+  "main": "./dist/index.min.js",
   "module": "./dist/index.min.js",
-  "browser": "./dist/index.min.js",
+  "browser": "./dist/index.nomodule.min.js",
   "scripts": {
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha -r ts-node/register test/**/*.test.ts",
     "copy-declarations": "mv .Microfronts/*.d.ts dist",
