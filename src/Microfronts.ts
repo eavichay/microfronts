@@ -1,17 +1,17 @@
-import { IRouter, IAppContext as $IAppContext } from "./interfaces.js";
+import { IRouter, IAppContext } from "./interfaces.js";
 import { AppContext } from './AppContext.js';
-import './AppContainer';
 
 let instance: MicrofrontsOrchestrator;
 
-export interface IAppContext extends $IAppContext {}
-
+/**
+ * The microfronts instance. Singleton.
+ */
 export interface IOrchestrator {
     getRouter(): IRouter;
     getAppContext(): IAppContext;
 }
 
-class MicrofrontsOrchestrator {
+class MicrofrontsOrchestrator implements IOrchestrator {
     private appCtx = new AppContext();
     private router: IRouter = this.appCtx.router;
 
@@ -24,7 +24,11 @@ class MicrofrontsOrchestrator {
     }
 }
 
-export const Microfronts = (): MicrofrontsOrchestrator => {
+/**
+ * Provides access to the Microfronts orchestrator singleton
+ * @returns IOrchestrator
+ */
+export const Microfronts = (): IOrchestrator => {
     if (!instance) {
         instance = new MicrofrontsOrchestrator();
     }
