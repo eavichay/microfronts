@@ -1,14 +1,2 @@
-/// <reference path="./app-context.ts" />
-
-export { MFEvents } from './events.enum';
-export { RouteConfig, RouteResolution } from './router';
-export { historyAPICallbacks } from './history';
-export { AppContext } from './app-context';
-export { channel, IEventEmitter } from './messaging';
-export {
-  MicroFrontsHandlerInit,
-  MicroFrontsOptions,
-  init,
-  getRouteEmitter,
-  getRouter
-} from './micro-front';
+export { AppDescriptor, IAppContext, IDispatcher, IRouter, RouteConfig, RouteGuard, RouteInfo, IAppContainer, IMessageBus, Callback, Unsubsciber } from './interfaces';
+export { Microfronts, IOrchestrator } from './Microfronts';

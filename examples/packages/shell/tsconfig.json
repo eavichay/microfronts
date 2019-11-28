@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist/",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "esnext",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "sourceRoot": "./src"
+  }
+}
