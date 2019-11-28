@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 
 import './App.css';
@@ -30,7 +30,7 @@ const toggleTodo = (id, done) => {
 
 const App = () => {
   const todos = useSelector(state => state.todos.todos);
-  let newTodoInput = useRef();
+  const [ inputValue, setInputValue ] = useState('');
   let list = todos ? todos.map(
     (todo, idx) =>
       <li key={idx}>
@@ -42,10 +42,10 @@ const App = () => {
       <div className="App-header">
         HELLO, you have {todos.length} Items in your list.
         <div>
-          <input ref={newTodoInput} type="text" placeholder="New Todo Item"></input><button onClick={() => {
-            if (newTodoInput.current.value) {
-              addTodo(newTodoInput.current.value);
-              newTodoInput.current.value = '';
+          <input value={inputValue} onChange={(event) => setInputValue(event.target.value)} type="text" placeholder="New Todo Item"></input><button onClick={() => {
+            if (inputValue) {
+              addTodo(inputValue);
+              setInputValue('')
             }
           }}>Add Todo</button>
         </div>

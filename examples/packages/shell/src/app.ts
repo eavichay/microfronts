@@ -28,17 +28,17 @@ window.AppContext.set('nativeState', {
 
 const REACT_APP: AppDescriptor = {
     baseUrl: 'http://localhost:3000',
-    name: 'react'
+    appId: 'react'
 };
 
 const ANGULAR_APP: AppDescriptor = {
     baseUrl: 'http://localhost:4200',
-    name: 'angular'
+    appId: 'angular'
 };
 
 const ERROR404_APP: AppDescriptor = {
     baseUrl: './404.html',
-    name: 'error404'
+    appId: 'error404'
 };
 
 router.markDOM();

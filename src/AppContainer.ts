@@ -44,7 +44,7 @@ class AppContainer extends HTMLIFrameElement {
     }
 
     private async navigationHandler(routeInfo: RouteInfo = (<IOrchestrator>this.orchestrator).getRouter().currentRoute) {
-        const activeAppConfig = (routeInfo.config.active || []).find(routeConfig => routeConfig.name === this.appId);
+        const activeAppConfig = (routeInfo.config.active || []).find(routeConfig => routeConfig.appId === this.appId);
         if (activeAppConfig) {
             Object.defineProperty(this.contentWindow, "RouteContext", { 
                 configurable: true,
@@ -56,7 +56,7 @@ class AppContainer extends HTMLIFrameElement {
         } else {
             this.hidden = true;
         }
-        const inactiveAppConfig = (routeInfo.config.inactive || []).find(routeConfig => routeConfig.name === this.appId);
+        const inactiveAppConfig = (routeInfo.config.inactive || []).find(routeConfig => routeConfig.appId === this.appId);
         if (inactiveAppConfig) {
             this.src = "about:blank";
             this.hidden = true;

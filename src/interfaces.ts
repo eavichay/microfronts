@@ -23,7 +23,7 @@ export interface IMessageBus {
 }
 
 export type AppDescriptor = {
-    name: string;
+    appId: string;
     baseUrl: string;
     staticData?: any;
 }
