@@ -1,6 +1,6 @@
 {
   "name": "microfronts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Micro-Frontends solution with shell application and front-ends orchestrator",
   "main": "./dist/index.min.js",
   "module": "./dist/index.min.js",
