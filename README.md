@@ -72,7 +72,7 @@ Angular holds the user service, containing the data, login and other actions. It
 // angular-app/services/User.service.ts
 @Injectable() class UserService {
     public stream$ = new BehaviorSubject<UserData|null>(null);
-    constructon() {
+    constructor() {
         window.AppContext.set('services.stream', this.stream$);
     }
 }
@@ -109,4 +109,4 @@ If you wish to join - open an issue, suggest an improvement, create pull-request
 
 Currently documenation is only inside the code, we appreciate help wiring up a good documentation webpage.
 
-> #usetheplatform
+`#usetheplatform`
