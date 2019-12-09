@@ -66,7 +66,7 @@ To see code example, take a look at the examples folder (available in the github
 Microfronts provides a runtime-shared application context, which can be consumed by running front-ends. The context also enables the front-ends to **provide** utilities to other front-ends.
 
 ###### For example
-Angular holds the user service, containing the data, login and other actions. It exposes a RxJs *Subejct* object and would like to expose it to the rest of the wolrd.
+Angular holds the user service, containing the data, login and other actions. It exposes a RxJs *Subject* object and would like to expose it to the rest of the world.
 
 ```typescript
 // angular-app/services/User.service.ts
@@ -107,6 +107,6 @@ Microfronts provides more features, such as route guards (used for dirty-clean s
 # We need your support!
 If you wish to join - open an issue, suggest an improvement, create pull-request or join the team.
 
-Currently documenation is only inside the code, we appreciate help wiring up a good documentation webpage.
+Currently documentation is only inside the code, we appreciate help wiring up a good documentation webpage.
 
 `#usetheplatform`
