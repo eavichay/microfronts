@@ -9,7 +9,7 @@ Microfronts orchestrates multiple front-end applications with **shared** runtime
 ### Creating the shell application
 The shell application should be a super-thin layer of html, css and a tiny javascript file.
 
-The shell contains the configuration for your front-ends bound with the releavant routes. The microfronts library will orchestrate the front-ends whenever route changes. It will also provide shared runtime fully accessible by demand.
+The shell contains the configuration for your front-ends bound with the relevant routes. The microfronts library will orchestrate the front-ends whenever route changes. It will also provide shared runtime fully accessible by demand.
 
 ###### Quick example:
 ```html
