@@ -2,7 +2,7 @@
 > "One shell to rule them all, One shell to bind them, One shell to wrap them all and in the light to run them"
 
 ## Polyglot Front-End Solution
-Micro-Frontends approach enables us to split our products into separate modules as any of them is built with any web technology (i.e. React/Angular/Vue/...). A thin code layer orchestrates them as a single product, keeping the UX intact. The approach enables companies to stale rewrites of old production code and combine new technologies with legacy ones without breaking everything.
+Micro-Frontends approach enables us to split our products into separate modules as any of them is built with any web technology (i.e. React/Angular/Vue/...). A thin code layer orchestrates them as a single product, keeping the UX intact. The approach enables companies to suspend rewrites of old production code and combine new technologies with legacy ones without breaking everything.
 
 Microfronts orchestrates multiple front-end applications with **shared** runtime and **fully controlled** sandboxing at the same time.
 
