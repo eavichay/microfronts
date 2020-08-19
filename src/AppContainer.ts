@@ -46,7 +46,7 @@ class AppContainer extends HTMLIFrameElement {
     private async navigationHandler(routeInfo: RouteInfo = (<IOrchestrator>this.orchestrator).getRouter().currentRoute) {
         const activeAppConfig = (routeInfo.config.active || []).find(routeConfig => routeConfig.appId === this.appId);
         if (activeAppConfig) {
-            Object.defineProperty(this.contentWindow, "RouteContext", { 
+            Object.defineProperty(this.contentWindow, "RouteContext", {
                 configurable: true,
                 writable: false,
                 value: activeAppConfig.staticData
@@ -89,16 +89,19 @@ class AppContainer extends HTMLIFrameElement {
         Object.defineProperty(contentWindow, 'AppContext', { value: orchestartor.getAppContext() });
         contentDocument.write(doc.documentElement.innerHTML);
         contentDocument.close();
-        contentWindow.addEventListener('popstate', this.onHashChanged);
-        this.applyPath(orchestartor.getRouter().currentRoute.full);
+
+        const router = orchestartor.getRouter();
+		router.location.onChange(this.onHashChanged);
+        this.applyPath(router.currentRoute.full);
     }
 
     private applyPath(hash: string) {
-        (<WindowProxy>this.contentWindow).location.hash = hash;
+		(<IOrchestrator>this.orchestrator).getRouter().location.setPath(hash)
     }
 
     private onHashChanged() {
-        (<IOrchestrator>this.orchestrator).getRouter().navigate((<WindowProxy>this.contentWindow).location.hash);
+    	const router = (<IOrchestrator>this.orchestrator).getRouter();
+    	router.navigate(router.location.getPath());
     }
 }
 

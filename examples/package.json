@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "postinstall": "(cd packages/angular && npm i) && (cd packages/react-demo && npm i) && (cd packages/shell && npm i)",
     "start": "lerna run start --parallel --stream"
   },
   "devDependencies": {

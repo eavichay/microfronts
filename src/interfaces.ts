@@ -103,10 +103,22 @@ export interface RouteGuard {
     check: (info: {from: RouteInfo, to: RouteInfo}) => Promise<boolean>;
 }
 
+export interface ILocationMode {
+    getPath(): string;
+    setPath(path: string): void;
+    onChange(callback: () => any): void;
+}
+
+export type ILocationModeClass = { new (...args: any[]): ILocationMode; }
+
+
 /**
  * Router used in the Microfronts orchestrator
  */
 export interface IRouter extends IDispatcher<RouteInfo> {
+
+    location: ILocationMode;
+
     /**
      * Until initialized, router may not work properly.
      * Initializing the router should be executed after the registration of routes.

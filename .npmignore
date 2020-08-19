@@ -7,3 +7,4 @@ mocha.opts
 tsconfig.json
 examples
 src
+.idea
